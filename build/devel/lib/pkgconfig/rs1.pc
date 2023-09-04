@@ -1,0 +1,8 @@
+prefix=/home/rs1/catkin_ws/src/rs1/build/devel
+
+Name: rs1
+Description: Description of rs1
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
