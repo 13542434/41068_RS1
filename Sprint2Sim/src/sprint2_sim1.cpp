@@ -7,7 +7,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  // Initialize the ROS node
+  // Initialise the ROS node
   ros::init(argc, argv, "cmd_vel_publisher");
 
   // NodeHandle is the main access point to communications with the ROS system
@@ -16,7 +16,6 @@ int main(int argc, char **argv)
   // Create a Publisher object that can publish messages to the "cmd_vel" topic
   ros::Publisher cmd_vel_pub = n.advertise<geometry_msgs::Twist>("cmd_vel", 1000);
 
-  // Set the loop rate in Hz
   ros::Rate loop_rate(10);
 
   int step = 0;
@@ -28,114 +27,22 @@ int main(int argc, char **argv)
 
     switch (step)
     {
-      case 0:
+      case 1:
         // Step 0: Move forward
         twist.linear.x = 0.0;
         twist.angular.z = 0.0;
         
         break;
         
-      case 1:
+      case 2:
         // Step 1: Rotate
         twist.linear.x = 0.0;
         twist.angular.z = -0.2;
         
         break;
 
-      case 2:
-        
-        twist.linear.x = 0.1;
-        twist.angular.z = 0.0;
-        
-        break;
 
-      case 3:
-      
-        twist.linear.x = 0.0;
-        twist.angular.z = 0.2;
-        
-        break;
-
-      case 4:
-        
-        twist.linear.x = 0.5;
-        twist.angular.z = 0.0;
-        
-        break;
-
-      case 5:
-        
-        twist.linear.x = 0.5;
-        twist.angular.z = 0.0;
-        
-        break;
-
-      case 6:
-        
-        twist.linear.x = 0.0;
-        twist.angular.z = 0.0;
-        
-      break;
-
-      case 7:
-        
-        twist.linear.x = 0.0;
-        twist.angular.z = 0.1;
-        
-      break;
-
-      case 8:
-        
-        twist.linear.x = 0.0;
-        twist.angular.z = 0.0;
-        
-      break;
-
-      case 9:
-        
-        twist.linear.x = 0.3;
-        twist.angular.z = 0.05;
-        
-      break;
-
-      case 10:
-        
-        twist.linear.x = 0.5;
-        twist.angular.z = 0.0;
-        
-      break;
-
-      case 11:
-        
-        twist.linear.x = 0.5;
-        twist.angular.z = 0.0;
-        
-      break;
-
-
-      case 12:
-        
-        twist.linear.x = 0.0;
-        twist.angular.z = 0.0;
-        
-      break;
-
-
-      case 13:
-        
-        twist.linear.x = 0.0;
-        twist.angular.z = 0.4;
-        
-      break;
-
-
-      case 14:
-        
-        twist.linear.x = 0.5;
-        twist.angular.z = 0.0;
-        
-      break;
-
+      //additional cases to move through the environment
 
       default:
         // Stop
