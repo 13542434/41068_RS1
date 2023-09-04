@@ -7,9 +7,9 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/rs1/catkin_ws/src/rs1/build/devel:$CMAKE_PREFIX_PATH"
-export LD_LIBRARY_PATH="/home/rs1/catkin_ws/src/rs1/build/devel/lib:$LD_LIBRARY_PATH"
-export PKG_CONFIG_PATH="/home/rs1/catkin_ws/src/rs1/build/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PWD='/home/rs1/catkin_ws/src/rs1/build'
-export ROSLISP_PACKAGE_DIRECTORIES="/home/rs1/catkin_ws/src/rs1/build/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/rs1/catkin_ws/src/rs1:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH="/home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PWD='/home/rs1/catkin_ws/src/rs1/Sprint2Sim/build'
+export ROSLISP_PACKAGE_DIRECTORIES="/home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/rs1/catkin_ws/src/rs1:/home/rs1/catkin_ws/src/rs1/Sprint2Sim:$ROS_PACKAGE_PATH"

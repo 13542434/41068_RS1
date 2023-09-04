@@ -67,8 +67,8 @@ set(rs1_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(rs1_SOURCE_PREFIX /home/rs1/catkin_ws/src/rs1)
-  set(rs1_DEVEL_PREFIX /home/rs1/catkin_ws/src/rs1/build/devel)
+  set(rs1_SOURCE_PREFIX /home/rs1/catkin_ws/src/rs1/Sprint2Sim)
+  set(rs1_DEVEL_PREFIX /home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel)
   set(rs1_INSTALL_PREFIX "")
   set(rs1_PREFIX ${rs1_DEVEL_PREFIX})
 else()
@@ -110,7 +110,7 @@ if(NOT " " STREQUAL " ")
         message(FATAL_ERROR "Project 'rs1' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'rs1' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/rs1/catkin_ws/src/rs1/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'rs1' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/rs1/catkin_ws/src/rs1/Sprint2Sim/${idir}'.  ${_report}")
     endif()
     _list_append_unique(rs1_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/rs1/catkin_ws/src/rs1/build/devel/lib;/home/rs1/catkin_ws/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel/lib;/home/rs1/catkin_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

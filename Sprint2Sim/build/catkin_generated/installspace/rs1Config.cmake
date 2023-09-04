@@ -67,8 +67,8 @@ set(rs1_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(rs1_SOURCE_PREFIX /home/rs1/catkin_ws/src/rs1)
-  set(rs1_DEVEL_PREFIX /home/rs1/catkin_ws/src/rs1/build/devel)
+  set(rs1_SOURCE_PREFIX /home/rs1/catkin_ws/src/rs1/Sprint2Sim)
+  set(rs1_DEVEL_PREFIX /home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel)
   set(rs1_INSTALL_PREFIX "")
   set(rs1_PREFIX ${rs1_DEVEL_PREFIX})
 else()

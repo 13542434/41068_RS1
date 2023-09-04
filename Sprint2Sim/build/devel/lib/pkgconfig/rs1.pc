@@ -1,4 +1,4 @@
-prefix=/home/rs1/catkin_ws/src/rs1/build/devel
+prefix=/home/rs1/catkin_ws/src/rs1/Sprint2Sim/build/devel
 
 Name: rs1
 Description: Description of rs1
