@@ -24,8 +24,13 @@ def send_goal(goal_pose):
 if __name__ == "__main__":
     rospy.init_node('send_goals')
 
+    print("Waiting for move_base action server...")
+
     client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
     client.wait_for_server()
+
+    start_time = rospy.get_time()
+    print("Connected to move base server")
 
     # define  goal positions and orientations
     ## @brief List of goal poses.
@@ -45,6 +50,8 @@ if __name__ == "__main__":
         }
     ]
 
+    print("Goals set! Moving to goals...")
+
     for i, goal_dict in enumerate(goals):
         # iterate through each goal and send to move_base
         goal_pose = PoseStamped()
@@ -59,3 +66,8 @@ if __name__ == "__main__":
             rospy.loginfo("Goal {0} reached!".format(i+1))
         else:
             rospy.logwarn("Failed to reach goal {0}!".format(i+1))
+
+    end_time = rospy.get_time()
+    elapsed_time = end_time - start_time
+    rospy.loginfo("Total time taken for all goals: %.2f seconds", elapsed_time)
+
