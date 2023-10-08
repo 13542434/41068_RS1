@@ -1,0 +1,135 @@
+\hypertarget{namespacepath}{}\section{path Namespace Reference}
+\label{namespacepath}\index{path@{path}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacepath_a2db4ca25204e9a7df7493344494d5a10}{send\+\_\+goal} (\hyperlink{namespacepath_a293cea0a504fa4dcccc4e27229ca89ae}{goal\+\_\+pose})
+\begin{DoxyCompactList}\small\item\em Send a goal to the move\+\_\+base action server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacepath_afeeab767bfbbb7e3c54d5df73bfdb8d8}{client} = actionlib.\+Simple\+Action\+Client(\textquotesingle{}move\+\_\+base\textquotesingle{}, Move\+Base\+Action)
+\item 
+list \hyperlink{namespacepath_a877836c262e905b21652b96e33c06fc5}{goals}
+\begin{DoxyCompactList}\small\item\em List of goal poses. \end{DoxyCompactList}\item 
+\hyperlink{namespacepath_a293cea0a504fa4dcccc4e27229ca89ae}{goal\+\_\+pose} = Pose\+Stamped()
+\item 
+\hyperlink{namespacepath_a4cc7d1dff632eb836dcba3e28c989d10}{frame\+\_\+id}
+\item 
+\hyperlink{namespacepath_afe6191924049eb7f282c32e77c383d23}{x}
+\item 
+\hyperlink{namespacepath_a2b9fe9b689f51d56430ac93944f60795}{y}
+\item 
+\hyperlink{namespacepath_a568fb423fb5588e9d0a43fa8a38b88c5}{z}
+\item 
+\hyperlink{namespacepath_a6b3a1b480dee3e2ccc2fda3d677fefbc}{w}
+\item 
+def \hyperlink{namespacepath_aefd1f3fdd2ce8dfc178f566e7ffbc0e6}{result} = \hyperlink{namespacepath_a2db4ca25204e9a7df7493344494d5a10}{send\+\_\+goal}(\hyperlink{namespacepath_a293cea0a504fa4dcccc4e27229ca89ae}{goal\+\_\+pose})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacepath_a2db4ca25204e9a7df7493344494d5a10}\label{namespacepath_a2db4ca25204e9a7df7493344494d5a10}} 
+\index{path@{path}!send\+\_\+goal@{send\+\_\+goal}}
+\index{send\+\_\+goal@{send\+\_\+goal}!path@{path}}
+\subsubsection{\texorpdfstring{send\+\_\+goal()}{send\_goal()}}
+{\footnotesize\ttfamily def path.\+send\+\_\+goal (\begin{DoxyParamCaption}\item[{}]{goal\+\_\+pose }\end{DoxyParamCaption})}
+
+
+
+Send a goal to the move\+\_\+base action server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em goal\+\_\+pose} & Pose\+Stamped The desired robot\textquotesingle{}s goal pose \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int succeeded or failed \begin{DoxyVerb}Send a goal to move_base
+
+Args:
+goal_pose (PoseStamped): The desired robot's goal pose.
+
+Returns:
+int: succeeded or failed
+\end{DoxyVerb}
+ 
+\end{DoxyReturn}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacepath_afeeab767bfbbb7e3c54d5df73bfdb8d8}\label{namespacepath_afeeab767bfbbb7e3c54d5df73bfdb8d8}} 
+\index{path@{path}!client@{client}}
+\index{client@{client}!path@{path}}
+\subsubsection{\texorpdfstring{client}{client}}
+{\footnotesize\ttfamily path.\+client = actionlib.\+Simple\+Action\+Client(\textquotesingle{}move\+\_\+base\textquotesingle{}, Move\+Base\+Action)}
+
+\mbox{\Hypertarget{namespacepath_a4cc7d1dff632eb836dcba3e28c989d10}\label{namespacepath_a4cc7d1dff632eb836dcba3e28c989d10}} 
+\index{path@{path}!frame\+\_\+id@{frame\+\_\+id}}
+\index{frame\+\_\+id@{frame\+\_\+id}!path@{path}}
+\subsubsection{\texorpdfstring{frame\+\_\+id}{frame\_id}}
+{\footnotesize\ttfamily path.\+frame\+\_\+id}
+
+\mbox{\Hypertarget{namespacepath_a293cea0a504fa4dcccc4e27229ca89ae}\label{namespacepath_a293cea0a504fa4dcccc4e27229ca89ae}} 
+\index{path@{path}!goal\+\_\+pose@{goal\+\_\+pose}}
+\index{goal\+\_\+pose@{goal\+\_\+pose}!path@{path}}
+\subsubsection{\texorpdfstring{goal\+\_\+pose}{goal\_pose}}
+{\footnotesize\ttfamily path.\+goal\+\_\+pose = Pose\+Stamped()}
+
+\mbox{\Hypertarget{namespacepath_a877836c262e905b21652b96e33c06fc5}\label{namespacepath_a877836c262e905b21652b96e33c06fc5}} 
+\index{path@{path}!goals@{goals}}
+\index{goals@{goals}!path@{path}}
+\subsubsection{\texorpdfstring{goals}{goals}}
+{\footnotesize\ttfamily list path.\+goals}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  [
+2         \{
+3             \textcolor{stringliteral}{'x'}: 1.5,
+4             \textcolor{stringliteral}{'y'}: -2.0,
+5             \textcolor{stringliteral}{'z'}: 0.0,
+6             \textcolor{stringliteral}{'w'}: 1.0
+7         \},
+8         \{
+9             \textcolor{stringliteral}{'x'}: 10.0,
+10             \textcolor{stringliteral}{'y'}: -2.0,
+11             \textcolor{stringliteral}{'z'}: 0.0,
+12             \textcolor{stringliteral}{'w'}: 0.5
+13         \}
+14     ]
+\end{DoxyCode}
+
+
+List of goal poses. 
+
+each entry contains the x, y, z, and orientation of a goal pose. \mbox{\Hypertarget{namespacepath_aefd1f3fdd2ce8dfc178f566e7ffbc0e6}\label{namespacepath_aefd1f3fdd2ce8dfc178f566e7ffbc0e6}} 
+\index{path@{path}!result@{result}}
+\index{result@{result}!path@{path}}
+\subsubsection{\texorpdfstring{result}{result}}
+{\footnotesize\ttfamily def path.\+result = \hyperlink{namespacepath_a2db4ca25204e9a7df7493344494d5a10}{send\+\_\+goal}(\hyperlink{namespacepath_a293cea0a504fa4dcccc4e27229ca89ae}{goal\+\_\+pose})}
+
+\mbox{\Hypertarget{namespacepath_a6b3a1b480dee3e2ccc2fda3d677fefbc}\label{namespacepath_a6b3a1b480dee3e2ccc2fda3d677fefbc}} 
+\index{path@{path}!w@{w}}
+\index{w@{w}!path@{path}}
+\subsubsection{\texorpdfstring{w}{w}}
+{\footnotesize\ttfamily path.\+w}
+
+\mbox{\Hypertarget{namespacepath_afe6191924049eb7f282c32e77c383d23}\label{namespacepath_afe6191924049eb7f282c32e77c383d23}} 
+\index{path@{path}!x@{x}}
+\index{x@{x}!path@{path}}
+\subsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily path.\+x}
+
+\mbox{\Hypertarget{namespacepath_a2b9fe9b689f51d56430ac93944f60795}\label{namespacepath_a2b9fe9b689f51d56430ac93944f60795}} 
+\index{path@{path}!y@{y}}
+\index{y@{y}!path@{path}}
+\subsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily path.\+y}
+
+\mbox{\Hypertarget{namespacepath_a568fb423fb5588e9d0a43fa8a38b88c5}\label{namespacepath_a568fb423fb5588e9d0a43fa8a38b88c5}} 
+\index{path@{path}!z@{z}}
+\index{z@{z}!path@{path}}
+\subsubsection{\texorpdfstring{z}{z}}
+{\footnotesize\ttfamily path.\+z}
+

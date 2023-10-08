@@ -1,0 +1,4 @@
+to run this , open the folder containing html and latex folder in cmd.
+run: 
+
+firefox html/index.html

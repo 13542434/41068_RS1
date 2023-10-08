@@ -1,36 +1,61 @@
-#!/usr/bin/env python2.7
 import rospy
 import actionlib
 from geometry_msgs.msg import PoseStamped
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
-# Initialize the ROS node
-rospy.init_node('send_goal')
+## @brief Send a goal to the move_base action server
+#  @param goal_pose PoseStamped The desired robot's goal pose
+#  @return int succeeded or failed
+def send_goal(goal_pose):
+    """Send a goal to move_base
 
-# Create an action client connected to the move_base action server
-client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+    Args:
+    goal_pose (PoseStamped): The desired robot's goal pose.
 
-# Wait for the action server to become available
-client.wait_for_server()
+    Returns:
+    int: succeeded or failed
+    """
+    goal = MoveBaseGoal()
+    goal.target_pose = goal_pose
+    client.send_goal(goal)
+    client.wait_for_result()
+    return client.get_state()
 
-# Define the goal position and orientation (quaternion)
-goal_pose = PoseStamped()
-goal_pose.header.frame_id = 'map'  # The frame in which the goal position is defined
-goal_pose.pose.position.x = 1.5  # X-coordinate of the goal position (meters)
-goal_pose.pose.position.y = -2.0  # Y-coordinate of the goal position (meters)
-goal_pose.pose.orientation.z = 0.0  # Quaternion representation of the goal orientation
-goal_pose.pose.orientation.w = 1.0
+if __name__ == "__main__":
+    rospy.init_node('send_goals')
 
-# Create a MoveBaseGoal object and set the target pose
-goal = MoveBaseGoal()
-goal.target_pose = goal_pose
+    client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+    client.wait_for_server()
 
-# Send the goal to the action server and wait for the result
-client.send_goal(goal)
-client.wait_for_result()
+    # define  goal positions and orientations
+    ## @brief List of goal poses.
+    #  @details each entry contains the x, y, z, and orientation of a goal pose.
+    goals = [
+        {
+            'x': 1.5,
+            'y': -2.0,
+            'z': 0.0,
+            'w': 1.0
+        },
+        {
+            'x': 10.0,
+            'y': -2.0,
+            'z': 0.0,
+            'w': 0.5
+        }
+    ]
 
-# Print the result of the navigation
-if client.get_state() == 3:
-    rospy.loginfo("Goal reached!")
-else:
-    rospy.logwarn("Failed to reach the goal!")
+    for i, goal_dict in enumerate(goals):
+        # iterate through each goal and send to move_base
+        goal_pose = PoseStamped()
+        goal_pose.header.frame_id = 'map'
+        goal_pose.pose.position.x = goal_dict['x']
+        goal_pose.pose.position.y = goal_dict['y']
+        goal_pose.pose.orientation.z = goal_dict['z']
+        goal_pose.pose.orientation.w = goal_dict['w']
+
+        result = send_goal(goal_pose)
+        if result == 3:  # If state is SUCCEEDED
+            rospy.loginfo("Goal {0} reached!".format(i+1))
+        else:
+            rospy.logwarn("Failed to reach goal {0}!".format(i+1))
