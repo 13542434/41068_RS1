@@ -1,8 +1,8 @@
-# import rospy
-# import actionlib
-# from geometry_msgs.msg import PoseStamped
-# from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
-# from nav_msgs.msg import Odometry
+import rospy
+import actionlib
+from geometry_msgs.msg import PoseStamped
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from nav_msgs.msg import Odometry
 import math
 from enum import Enum
 
@@ -76,7 +76,7 @@ class Hazards_Controller:
         rospy.Subscriber("/odom", Odometry, self.odom_callback)     
     
     def __init__(self) -> None:
-        # self.init_ros()
+        self.init_ros()
         pass
 
 
