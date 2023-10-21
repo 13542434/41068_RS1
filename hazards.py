@@ -4,17 +4,17 @@ from geometry_msgs.msg import PoseStamped
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from nav_msgs.msg import Odometry
 import math
-from enum import Enum
 
 class position:
-    x : float
-    y : float
-    z : float
-    def __init__(self, pos : tuple[float,float,float]) -> None:
+    x = 0.0 # float
+    y = 0.0# float
+    z = 0.0# float
+    def __init__(self, pos):
         self.x = pos[0]
         self.y = pos[1]
         self.z = pos[2]
-class hazard_type(str, Enum):
+        
+class hazard_type:
     NONE    = 'None'
     TEMP    = 'Temperature'
     C02     = 'Carbon Dioxide'
@@ -22,11 +22,11 @@ class hazard_type(str, Enum):
     NOISE   = 'Noise'
 
 class Hazard:
-    hazard : hazard_type
-    pos : position
-    value : float
+    hazard = hazard_type.NONE # hazard_type
+    pos = (0.0,0.0,0.0) # position
+    value = 0.0 # float
     
-    def __init__(self, hazard : hazard_type = hazard_type.NONE, pos : tuple[float,float,float] = (0.0,0.0,0.0), value : float = 0.0) -> None:
+    def __init__(self, hazard = hazard_type.NONE, pos = (0.0,0.0,0.0), value = 0.0):
         self.hazard_type = hazard
         self.pos = position(pos)
         self.value = value
@@ -55,27 +55,30 @@ class Hazards_Controller:
         ),
     ]
     
-    def odom_callback(self, data) -> None:
+    def odom_callback(self, data):
         self.current_position = data.pose.pose.position
 
-    def calculate_distance(self, point : position) -> float:
+    def calculate_distance(self, point): # returns float
         return math.sqrt((point.x - self.current_position.x)**2 + (point.y - self.current_position.y)**2)
     
-    def check_hazard(self) -> list:
-        result : list = []
+    def check_hazard(self): # returns list
+        if not self.current_position:
+            return None
+        
+        result = []
         for hazard in self.hazards:
             distance = self.calculate_distance(hazard.pos)
             if distance <= self.distance_threshold:
                 result.append((hazard.hazard_type,hazard.value))
         return result
     
-    def init_ros() -> None:
-        rospy.init_node('distance_to_heat_point')
-
+    def init_ros(self):
+        pass
+        rospy.init_node('distance_to_hazards')
         # Subscribe to the /odom topic to get the robot's current position
         rospy.Subscriber("/odom", Odometry, self.odom_callback)     
     
-    def __init__(self) -> None:
+    def __init__(self):
         self.init_ros()
         pass
 
@@ -88,19 +91,21 @@ if __name__ == "__main__":
     # Wait for a moment to ensure we get the robot's position
     # rospy.sleep(1)
     
-    x,y,z = [float(i) for i in input("Current Position \"x,y,z\" >>> ").split(',')]
+    x,y,z = [float(i) for i in raw_input("Current Position \"x,y,z\" >>> ").split(',')]
     hazards.current_position = position((x,y,z))
 
     if not hazards.current_position:
         print("Failed to get the robot's current position!")
         exit(1)
 
+    # ===== Call this every tick =====
     detected_hazards = hazards.check_hazard()
+    # ================================
     
     if len(detected_hazards) > 0:
-        print(f"Hazards Detected at ({hazards.current_position.x},{hazards.current_position.y}):")
+        print("Hazards Detected at (" + str(hazards.current_position.x) + "," + str(hazards.current_position.y) + "):")
         for type,value in detected_hazards:
-            print(f"{type}:\t{value}")
+            print(str(type) + "\t" + str(value))
     else:
         print("No hazards detected at current position")
         
