@@ -34,7 +34,8 @@ class Hazard:
             
 
 class Hazards_Controller:
-    publisher = None
+    pub_detected = None
+    pub_groundtruth = None
     # Global variable to store the robot's current position
     current_position = None
     distance_threshold = 1.0 # Distance between robot and hazard to call hazard
@@ -58,6 +59,7 @@ class Hazards_Controller:
     
     _rate = None
     _pointcloud = None
+    _groundtruth = None
     
     def odom_callback(self, data):
         self.current_position = data.pose.pose.position
@@ -76,18 +78,33 @@ class Hazards_Controller:
                 result.append((hazard.hazard_type,hazard.value))
         return result
     
+    def generate_groundtruth(self):
+        self._groundtruth = PointCloud()
+        self._groundtruth.header = Header()
+        self._groundtruth.header.frame_id = 'map'
+        self._groundtruth.header.stamp = rospy.Time.now()
+        for hazard in self.hazards:
+            self._groundtruth.points.append(Point32(
+                hazard.pos.x,
+                hazard.pos.y,
+                hazard.pos.z,
+            ))
+    
     def init_ros(self):
         pass
         rospy.init_node('distance_to_hazards')
         self._rate = rospy.Rate(5)
         # Subscribe to the /odom topic to get the robot's current position
         rospy.Subscriber("/odom", Odometry, self.odom_callback)     
-        self.publisher = rospy.Publisher('hazards', PointCloud, queue_size=10)
+        self.pub_detected = rospy.Publisher('/hazards/detected', PointCloud, queue_size=10)
+        self.pub_groundtruth = rospy.Publisher('/hazards/groundtruth', PointCloud, queue_size=10)
         
         self._pointcloud = PointCloud()
         self._pointcloud.header = Header()
         self._pointcloud.header.frame_id = 'map'
         self._pointcloud.header.stamp = rospy.Time.now()
+        
+        self.generate_groundtruth()
     
     def __init__(self):
         self.init_ros()
@@ -105,7 +122,8 @@ class Hazards_Controller:
                     print(str(type) + "\t" + str(value))
             else:
                 print("No hazards detected at current position")
-            self.publisher.publish(self._pointcloud)
+            self.pub_detected.publish(self._pointcloud)
+            self.pub_groundtruth.publish(self._groundtruth)
             self._rate.sleep()
       
 def test():
