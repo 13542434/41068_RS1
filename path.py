@@ -62,6 +62,7 @@ if __name__ == "__main__":
         goal_pose.pose.orientation.w = goal_dict['w']
 
         result = send_goal(goal_pose)
+
         if result == 3:  # If state is SUCCEEDED
             rospy.loginfo("Goal {0} reached!".format(i+1))
         else:
