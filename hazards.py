@@ -82,7 +82,7 @@ class Hazards_Controller:
         self._rate = rospy.Rate(5)
         # Subscribe to the /odom topic to get the robot's current position
         rospy.Subscriber("/odom", Odometry, self.odom_callback)     
-        rospy.Publisher('hazards', PointCloud)
+        self.publisher = rospy.Publisher('hazards', PointCloud, queue_size=10)
         
         self._pointcloud = PointCloud()
         self._pointcloud.header = Header()
@@ -97,14 +97,14 @@ class Hazards_Controller:
         while not rospy.is_shutdown():
             detected_hazards = self.check_hazard()
             if detected_hazards and len(detected_hazards) > 0:
-                rospy.loginfo("Hazards Detected at (" + str(self.current_position.x) + "," + str(self.current_position.y) + "):")
+                print("Hazards Detected at (" + str(self.current_position.x) + "," + str(self.current_position.y) + "):")
                 self._pointcloud.header.stamp = rospy.Time.now()
                 
                 for type,value in detected_hazards:
                     self._pointcloud.points.append(Point32(self.current_position.x,self.current_position.y,self.current_position.z))
-                    rospy.loginfo(str(type) + "\t" + str(value))
+                    print(str(type) + "\t" + str(value))
             else:
-                rospy.logdebug("No hazards detected at current position")
+                print("No hazards detected at current position")
             self.publisher.publish(self._pointcloud)
             self._rate.sleep()
       
