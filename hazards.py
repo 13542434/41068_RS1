@@ -81,33 +81,28 @@ class Hazards_Controller:
     def __init__(self):
         self.init_ros()
         pass
-
-
-
+        
+    def monitor_hazards(self):
+        # This loop will run until the node is stopped
+        while not rospy.is_shutdown():
+            detected_hazards = self.check_hazard()
+            if detected_hazards and len(detected_hazards) > 0:
+                print("Hazards Detected at (" + str(self.current_position.x) + "," + str(self.current_position.y) + "):")
+                for type,value in detected_hazards:
+                    print(str(type) + "\t" + str(value))
+            else:
+                print("No hazards detected at current position")
+            rospy.sleep(1)  # Check every second. You can modify this rate as needed.
 
 if __name__ == "__main__":
-    # Use this as a test function
     hazards = Hazards_Controller() 
-    # Wait for a moment to ensure we get the robot's position
-    # rospy.sleep(1)
-    
-    x,y,z = [float(i) for i in raw_input("Current Position \"x,y,z\" >>> ").split(',')]
-    hazards.current_position = position((x,y,z))
-
+    x, y, z = [float(i) for i in raw_input("Initial Position \"x,y,z\" >>> ").split(',')]
+    hazards.current_position = position((x, y, z))
     if not hazards.current_position:
-        print("Failed to get the robot's current position!")
+        print("Failed to get the robot's initial position!")
         exit(1)
+    hazards.monitor_hazards()  # Start monitoring hazards
 
-    # ===== Call this every tick =====
-    detected_hazards = hazards.check_hazard()
-    # ================================
-    
-    if len(detected_hazards) > 0:
-        print("Hazards Detected at (" + str(hazards.current_position.x) + "," + str(hazards.current_position.y) + "):")
-        for type,value in detected_hazards:
-            print(str(type) + "\t" + str(value))
-    else:
-        print("No hazards detected at current position")
         
 # print(f"Distance to heat_point ({heat_point['x']}, {heat_point['y']}) is: {distance:.2f} meters")
         
