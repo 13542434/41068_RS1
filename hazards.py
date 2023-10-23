@@ -1,8 +1,8 @@
 import rospy
-import actionlib
-from geometry_msgs.msg import PoseStamped
-from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from sensor_msgs.msg import PointCloud
 from nav_msgs.msg import Odometry
+from std_msgs.msg import Header
+from geometry_msgs.msg import Point32
 import math
 
 class position:
@@ -34,6 +34,7 @@ class Hazard:
             
 
 class Hazards_Controller:
+    publisher = None
     # Global variable to store the robot's current position
     current_position = None
     distance_threshold = 1.0 # Distance between robot and hazard to call hazard
@@ -55,6 +56,9 @@ class Hazards_Controller:
         ),
     ]
     
+    _rate = None
+    _pointcloud = None
+    
     def odom_callback(self, data):
         self.current_position = data.pose.pose.position
 
@@ -75,26 +79,36 @@ class Hazards_Controller:
     def init_ros(self):
         pass
         rospy.init_node('distance_to_hazards')
+        self._rate = rospy.Rate(5)
         # Subscribe to the /odom topic to get the robot's current position
         rospy.Subscriber("/odom", Odometry, self.odom_callback)     
+        rospy.Publisher('hazards', PointCloud)
+        
+        self._pointcloud = PointCloud()
+        self._pointcloud.header = Header()
+        self._pointcloud.header.frame_id = 'map'
+        self._pointcloud.header.stamp = rospy.Time.now()
     
     def __init__(self):
         self.init_ros()
         pass
-        
-    def monitor_hazards(self):
-        # This loop will run until the node is stopped
+
+    def run(self):
         while not rospy.is_shutdown():
             detected_hazards = self.check_hazard()
             if detected_hazards and len(detected_hazards) > 0:
-                print("Hazards Detected at (" + str(self.current_position.x) + "," + str(self.current_position.y) + "):")
+                rospy.loginfo("Hazards Detected at (" + str(self.current_position.x) + "," + str(self.current_position.y) + "):")
+                self._pointcloud.header.stamp = rospy.Time.now()
+                
                 for type,value in detected_hazards:
-                    print(str(type) + "\t" + str(value))
+                    self._pointcloud.points.append(Point32(self.current_position.x,self.current_position.y,self.current_position.z))
+                    rospy.loginfo(str(type) + "\t" + str(value))
             else:
-                print("No hazards detected at current position")
-            rospy.sleep(1)  # Check every second. You can modify this rate as needed.
-
-if __name__ == "__main__":
+                rospy.logdebug("No hazards detected at current position")
+            self.publisher.publish(self._pointcloud)
+            self._rate.sleep()
+      
+def test():
     hazards = Hazards_Controller() 
     x, y, z = [float(i) for i in raw_input("Initial Position \"x,y,z\" >>> ").split(',')]
     hazards.current_position = position((x, y, z))
@@ -102,6 +116,10 @@ if __name__ == "__main__":
         print("Failed to get the robot's initial position!")
         exit(1)
     hazards.monitor_hazards()  # Start monitoring hazards
+            
+if __name__ == "__main__":
+    hazards = Hazards_Controller() 
+    hazards.run()
 
         
 # print(f"Distance to heat_point ({heat_point['x']}, {heat_point['y']}) is: {distance:.2f} meters")
