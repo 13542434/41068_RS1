@@ -76,6 +76,7 @@ class Hazards_Controller:
             distance = self.calculate_distance(hazard.pos)
             if distance <= self.distance_threshold:
                 result.append((hazard.hazard_type,hazard.value))
+                print("Hazard intensity is: {:.2f}".format(1 - distance))
         return result
     
     def generate_groundtruth(self):
