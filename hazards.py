@@ -42,17 +42,17 @@ class Hazards_Controller:
     hazards = [
         Hazard(
             hazard=hazard_type.TEMP,
-            pos=(4.0,-2.0,0.0),
+            pos=(-7.0,6.5,0.0),
             value=50.0
         ),
         Hazard(
             hazard=hazard_type.C02,
-            pos=(3.0,-2.0,0.0),
+            pos=(-5.0,-3.0,0.0),
             value=4.2
         ),
         Hazard(
             hazard=hazard_type.NOISE,
-            pos=(3.0,-1.0,0.0),
+            pos=(4.0,-3.0,0.0),
             value=105.2
         ),
     ]
