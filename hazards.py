@@ -1,5 +1,5 @@
 import rospy
-from sensor_msgs.msg import PointCloud
+from sensor_msgs.msg import PointCloud, ChannelFloat32
 from nav_msgs.msg import Odometry
 from std_msgs.msg import Header
 from geometry_msgs.msg import Point32
@@ -7,8 +7,8 @@ import math
 
 class position:
     x = 0.0 # float
-    y = 0.0# float
-    z = 0.0# float
+    y = 0.0 # float
+    z = 0.0 # float
     def __init__(self, pos):
         self.x = pos[0]
         self.y = pos[1]
@@ -59,6 +59,7 @@ class Hazards_Controller:
     
     _rate = None
     _pointcloud = None
+    _intensity = None
     _groundtruth = None
     
     def odom_callback(self, data):
@@ -75,7 +76,7 @@ class Hazards_Controller:
         for hazard in self.hazards:
             distance = self.calculate_distance(hazard.pos)
             if distance <= self.distance_threshold:
-                result.append((hazard.hazard_type,hazard.value))
+                result.append((hazard.hazard_type, hazard.value, distance/self.distance_threshold))
         return result
     
     def generate_groundtruth(self):
@@ -103,6 +104,9 @@ class Hazards_Controller:
         self._pointcloud.header = Header()
         self._pointcloud.header.frame_id = 'map'
         self._pointcloud.header.stamp = rospy.Time.now()
+        self._intensity = ChannelFloat32()
+        self._pointcloud.channels.append(self._intensity)
+        self._intensity.name = 'Intensity'
         
         self.generate_groundtruth()
     
@@ -117,9 +121,10 @@ class Hazards_Controller:
                 print("Hazards Detected at (" + str(self.current_position.x) + "," + str(self.current_position.y) + "):")
                 self._pointcloud.header.stamp = rospy.Time.now()
                 
-                for type,value in detected_hazards:
+                for type,value,intensity in detected_hazards:
                     self._pointcloud.points.append(Point32(self.current_position.x,self.current_position.y,self.current_position.z))
-                    print(str(type) + "\t" + str(value))
+                    self._intensity.values.append(intensity)
+                    print(str(type) + "\t" + str(value) + "\t" + str(intensity))
             else:
                 print("No hazards detected at current position")
             self.pub_detected.publish(self._pointcloud)
