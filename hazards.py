@@ -42,7 +42,7 @@ class Hazards_Controller:
     hazards = [
         Hazard(
             hazard=hazard_type.TEMP,
-            pos=(-7.0,6.5,0.0),
+            pos=(-6.0,6,0.0),
             value=50.0
         ),
         Hazard(

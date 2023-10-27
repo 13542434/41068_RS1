@@ -37,7 +37,7 @@ if __name__ == "__main__":
     #  @details each entry contains the x, y, z, and orientation of a goal pose.
     goals = [
         {
-            'x': -7,
+            'x': -6.0,
             'y': 6.0,
             'z': 0.0,
             'w': 1.0
