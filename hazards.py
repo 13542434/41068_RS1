@@ -17,7 +17,7 @@ class position:
 class hazard_type:
     NONE    = 'None'
     TEMP    = 'Temperature'
-    C02     = 'Carbon Dioxide'
+    CO2     = 'Carbon Dioxide'
     AMMONIA = 'Ammonia'
     NOISE   = 'Noise'
 
@@ -46,7 +46,7 @@ class Hazards_Controller:
             value=50.0
         ),
         Hazard(
-            hazard=hazard_type.C02,
+            hazard=hazard_type.CO2,
             pos=(-5.0,-3.0,0.0),
             value=4.2
         ),
