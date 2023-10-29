@@ -2,5 +2,17 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.formatting.provider": "none"
+  "python.formatting.provider": "none",
+  "python.autoComplete.extraPaths": [
+    "/home/rs1/catkin_ws/devel_isolated/turtlebot3_teleop/lib/python2.7/dist-packages",
+    "/home/rs1/catkin_ws/install_isolated/lib/python2.7/dist-packages",
+    "/home/rs1/catkin_ws/devel/lib/python2.7/dist-packages",
+    "/opt/ros/melodic/lib/python2.7/dist-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/rs1/catkin_ws/devel_isolated/turtlebot3_teleop/lib/python2.7/dist-packages",
+    "/home/rs1/catkin_ws/install_isolated/lib/python2.7/dist-packages",
+    "/home/rs1/catkin_ws/devel/lib/python2.7/dist-packages",
+    "/opt/ros/melodic/lib/python2.7/dist-packages"
+  ]
 }
