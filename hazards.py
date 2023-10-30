@@ -83,7 +83,7 @@ class Hazards_Controller:
     def generate_groundtruth(self):
         self._groundtruth = PointCloud()
         self._groundtruth.header = Header()
-        self._groundtruth.header.frame_id = 'map'
+        self._groundtruth.header.frame_id = 'odom'
         self._groundtruth.header.stamp = rospy.Time.now()
         for hazard in self.hazards:
             self._groundtruth.points.append(Point32(
@@ -103,11 +103,11 @@ class Hazards_Controller:
         
         self._pointcloud = PointCloud()
         self._pointcloud.header = Header()
-        self._pointcloud.header.frame_id = 'map'
+        self._pointcloud.header.frame_id = 'odom'
         self._pointcloud.header.stamp = rospy.Time.now()
         self._intensity = ChannelFloat32()
         self._pointcloud.channels.append(self._intensity)
-        self._intensity.name = 'Intensity'
+        self._intensity.name = 'intensity'
         
         self.generate_groundtruth()
     
